@@ -4,9 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Admin/FlagGuesserGame/app/src/main/res/drawable/flags2.xml" value="0.2085" />
-        <entry key="..\:/Users/Admin/FlagGuesserGame/app/src/main/res/layout/activity_login.xml" value="0.35104166666666664" />
+        <entry key="..\:/Users/Admin/FlagGuesserGame/app/src/main/res/layout/activity_info.xml" value="0.21481481481481482" />
+        <entry key="..\:/Users/Admin/FlagGuesserGame/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/Admin/FlagGuesserGame/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Admin/FlagGuesserGame/app/src/main/res/layout/activity_play.xml" value="0.35104166666666664" />
+        <entry key="..\:/Users/Admin/FlagGuesserGame/app/src/main/res/layout/activity_ranking.xml" value="0.26927083333333335" />
+        <entry key="..\:/Users/Admin/FlagGuesserGame/app/src/main/res/mipmap-anydpi-v26/flagsicon.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/FlagGuesserGame/app/src/main/res/mipmap-anydpi-v26/flagsicon_round.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/FlagGuesserGame/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2985" />
+        <entry key="..\:/Users/Admin/FlagGuesserGame/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.143" />
       </map>
     </option>
   </component>

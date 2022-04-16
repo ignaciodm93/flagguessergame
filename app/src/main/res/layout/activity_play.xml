@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D5E3E1"
+    android:background="#FFD9CD"
     tools:context=".MainActivity">
 
 
@@ -101,21 +101,6 @@
         tools:layout_editor_absoluteX="20dp"
         tools:layout_editor_absoluteY="97dp" />
 -->
-    <EditText
-        android:id="@+id/idref"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="185dp"
-        android:layout_marginBottom="2dp"
-        android:ems="10"
-        android:hint="ref"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/b3" />
 
     <EditText
         android:id="@+id/score"

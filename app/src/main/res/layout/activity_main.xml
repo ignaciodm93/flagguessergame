@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFD9CD"
     tools:context=".MainActivity">
 
     <Button
@@ -11,7 +12,7 @@
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="16dp"
         android:onClick="goToPlayActivity"
@@ -20,7 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/apptitle"
+        app:layout_constraintTop_toBottomOf="@+id/imgWorld"
         tools:ignore="MissingConstraints,OnClick" />
 
     <Button
@@ -31,6 +32,7 @@
         android:layout_marginTop="6dp"
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="12dp"
+        android:onClick="goToRankingActivity"
         android:text="RANKING"
         app:layout_constraintBottom_toTopOf="@+id/button_info"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +65,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="80dp"
-        android:layout_marginBottom="53dp"
+        android:layout_marginBottom="80dp"
         android:text="INFO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,17 +79,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="107dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="107dp"
-        android:layout_marginBottom="215dp"
+        android:layout_marginBottom="5dp"
         android:capitalize="characters"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Flag Guesser"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="50sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_play"
+        android:textSize="65sp"
+        app:layout_constraintBottom_toTopOf="@+id/imgWorld"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgWorld"
+        android:layout_width="240dp"
+        android:layout_height="273dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_play"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/apptitle"
+        app:srcCompat="@drawable/flags2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

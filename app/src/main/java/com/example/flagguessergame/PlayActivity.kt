@@ -28,7 +28,6 @@ class PlayActivity : AppCompatActivity() {
     }
 
     fun redirectToMain() {
-        //setContentView(R.layout.activity_main)
         var intentMain: Intent = Intent(this, MainActivity::class.java)
         startActivity(intentMain)
     }
@@ -61,7 +60,7 @@ class PlayActivity : AppCompatActivity() {
         var img = findViewById<ImageView>(R.id.image_view)
         var url = "https://countryflagsapi.com/png/$flagSelected"
         //prueba, borrar luego:
-        findViewById<EditText>(R.id.idref).setText(flagSelected)
+        //findViewById<EditText>(R.id.idref).setText(flagSelected)
         Picasso.with(this).load(url).into(img)
     }
 

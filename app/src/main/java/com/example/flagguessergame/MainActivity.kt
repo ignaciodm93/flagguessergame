@@ -14,13 +14,27 @@ class MainActivity : AppCompatActivity() {
     var buttonPlayActivated: Boolean = false
 
     fun goToPlayActivity(view: View) {
-        var intent_play: Intent = Intent(this, PlayActivity::class.java)
-        startActivity(intent_play)
-        //setContentView(R.layout.activity_play)
+        var intentPlay: Intent = Intent(this, PlayActivity::class.java)
+        startActivity(intentPlay)
     }
 
     fun goToLoginActivity(view: View) {
-        setContentView(R.layout.activity_login)
+        var intentLogin: Intent = Intent(this, LoginActivity::class.java)
+        startActivity(intentLogin)
     }
 
+    fun goToRankingActivity(view: View) {
+        var intentRanking: Intent = Intent(this, RankingActivity::class.java)
+        startActivity(intentRanking)
+    }
+
+    fun goToInfoActivity(view: View) {
+        var infoRanking: Intent = Intent(this, InfoActivity::class.java)
+        startActivity(infoRanking)
+    }
+/*
+    fun redirectTo(intent: Intent, activity: AppCompatActivity) {
+        var intent: Intent = Intent(this, activity::class.java)
+        startActivity(intent)
+    }*/
 }
