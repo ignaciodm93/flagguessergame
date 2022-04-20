@@ -4,11 +4,24 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.view.isVisible
 
 class MainActivity : AppCompatActivity() {
+
+    var isLogged: String = "false"
+    var currentUser: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        isLogged= intent.getStringExtra("isLogged").toString()
+        currentUser= intent.getStringExtra("username").toString()
+        checkIfLogged()
     }
 
     var buttonPlayActivated: Boolean = false
@@ -32,9 +45,18 @@ class MainActivity : AppCompatActivity() {
         var infoRanking: Intent = Intent(this, InfoActivity::class.java)
         startActivity(infoRanking)
     }
-/*
-    fun redirectTo(intent: Intent, activity: AppCompatActivity) {
-        var intent: Intent = Intent(this, activity::class.java)
-        startActivity(intent)
-    }*/
+
+    fun checkIfLogged() {
+        if(isLogged.toString() == "true") {
+            findViewById<ImageView>(R.id.dooricon).isVisible = false
+            findViewById<ImageView>(R.id.onicon).isVisible = true
+            findViewById<ImageView>(R.id.officon).isVisible = false
+            findViewById<TextView>(R.id.username).setText(currentUser)
+        }
+        else {
+            findViewById<ImageView>(R.id.dooricon).isVisible = true
+            findViewById<ImageView>(R.id.onicon).isVisible = false
+            findViewById<ImageView>(R.id.onicon).isVisible = false
+        }
+    }
 }
