@@ -7,12 +7,15 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 
 class MainActivity : AppCompatActivity() {
 
     var isLogged: String = "false"
     var currentUser: String = ""
+    var score: Int = 0
+    var doorIcon: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,14 +24,26 @@ class MainActivity : AppCompatActivity() {
 
         isLogged= intent.getStringExtra("isLogged").toString()
         currentUser= intent.getStringExtra("username").toString()
+        score = intent.getIntExtra("score", 0)
+
         checkIfLogged()
     }
 
     var buttonPlayActivated: Boolean = false
 
     fun goToPlayActivity(view: View) {
-        var intentPlay: Intent = Intent(this, PlayActivity::class.java)
-        startActivity(intentPlay)
+        if(this.isLogged == "true") {
+            var intentPlay: Intent = Intent(this, PlayActivity::class.java)
+            intentPlay.putExtra("username", currentUser)
+            if (this.score != 0) {
+                intentPlay.putExtra("score", score)
+            }
+            startActivity(intentPlay)
+        }
+        else {
+            Toast.makeText(this, "Debe loggearse para poder jugar", Toast.LENGTH_LONG).show()
+        }
+
     }
 
     fun goToLoginActivity(view: View) {
@@ -46,17 +61,30 @@ class MainActivity : AppCompatActivity() {
         startActivity(infoRanking)
     }
 
-    fun checkIfLogged() {
-        if(isLogged.toString() == "true") {
-            findViewById<ImageView>(R.id.dooricon).isVisible = false
+    fun checkIfLogged(): Boolean {
+        return if(isLogged.toString() == "true") {
+            findViewById<ImageView>(R.id.dooricon).isVisible = true
             findViewById<ImageView>(R.id.onicon).isVisible = true
             findViewById<ImageView>(R.id.officon).isVisible = false
-            findViewById<TextView>(R.id.username).setText(currentUser)
-        }
-        else {
-            findViewById<ImageView>(R.id.dooricon).isVisible = true
+            findViewById<TextView>(R.id.username).text = currentUser
+
+            true
+        } else {
+            findViewById<ImageView>(R.id.dooricon).isVisible = false
             findViewById<ImageView>(R.id.onicon).isVisible = false
-            findViewById<ImageView>(R.id.onicon).isVisible = false
+
+
+            false
         }
+    }
+
+    fun logout(view: View) {
+        this.currentUser = ""
+        findViewById<TextView>(R.id.username).text = "notLogged"
+        this.score = 0
+        this.isLogged = false.toString()
+        findViewById<ImageView>(R.id.onicon).isVisible = false
+        findViewById<ImageView>(R.id.officon).isVisible = true
+        findViewById<ImageView>(R.id.dooricon).isVisible = false
     }
 }

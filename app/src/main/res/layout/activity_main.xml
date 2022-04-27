@@ -137,7 +137,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logoff"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:onClick="logout"
+        tools:ignore="OnClick" />
 
     <ImageView
         android:id="@+id/onicon"
