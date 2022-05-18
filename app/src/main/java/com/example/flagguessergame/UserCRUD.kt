@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.widget.Toast
 import java.io.IOException
 
@@ -32,21 +33,7 @@ class UserCRUD() {
         if( cursor.count > 0) {
             print("hay reg")
         }
-        //db.close()
-        //return result
 
-        /*val admin = SQLiteHelper(context, "users", null, 1)
-            val bd = admin.writableDatabase
-            val fila = bd.rawQuery("select name from users where name=${nameToCheck}", null)
-            bd.close()
-
-            if(fila.moveToFirst()) {
-                print("si tiene")
-            } else {
-                print("no tiene")
-            }
-
-            return fila.moveToFirst()*/
         return false
     }
     /*
@@ -111,12 +98,12 @@ class UserCRUD() {
     }
 
     @SuppressLint("Range")
-    fun getTopTen(context: Context): List<User> {
-        val admin = SQLiteHelper(context,"GameDB", null, 1)
-        val db = admin.writableDatabase
-        val query = "SELECT name, score FROM Users ORDER BY score DESC LIMIT 10"
+    fun getTopTenCursor(context: Context, db: SQLiteDatabase): Cursor {
+        //val admin = SQLiteHelper(context,"GameDB", null, 1)
+        //val db = admin.writableDatabase
+        val query = "SELECT * FROM Users ORDER BY score DESC LIMIT 10"
         val cursor = db.rawQuery(query, null)
-        val usersFound = mutableListOf<User>()
+        /*val usersFound = mutableListOf<User>()
 
         var list = mutableListOf<String>()
 
@@ -128,9 +115,9 @@ class UserCRUD() {
                 usersFound.add(newUser);
                 list.add(name)
             }while (cursor.moveToNext());
-        }
-        db.close()
-        return usersFound
+        }*/
+        //db.close()
+        return cursor
     }
 
     //Metodo para borrar por nombre (chequea que la contraseña sea la adecuada)
@@ -142,7 +129,7 @@ class UserCRUD() {
             val query = "delete from Users where name = ?"
             val cursor = db.rawQuery(query, arrayOf(nameToErase))
         } else {
-            Toast.makeText(context, "La contraseña no es la adecuada o el usuario no existe", Toast.LENGTH_LONG)
+            Toast.makeText(context, "La contraseña no es la adecuada o el usuario no existe", Toast.LENGTH_LONG).show()
         }
         db.close()
     }
@@ -156,15 +143,20 @@ class UserCRUD() {
         db.close()
     }
 
-    fun updateScore(context: Context, name: String, score: Int) {
-        val admin = SQLiteHelper(context,"GameDB", null, 1)
-        val bd = admin.writableDatabase
-        val newUpdate = ContentValues()
-        val oldScore = getCurrentPlayersScore(context, name)
-        val newScore = score + oldScore
-        newUpdate.put("score", newScore)
-        bd.update("Users", newUpdate, "name=${name}", null)
-        bd.close()
+    fun updateScore(context: Context, name: String, newScore: Int) {
+        try{
+            val admin = SQLiteHelper(context,"GameDB", null, 1)
+            val db = admin.writableDatabase
+            val oldScore = getCurrentPlayersScore(context, name)
+            val updatedScore = newScore + oldScore
+
+            val updateQuery = "update Users set score = $updatedScore where name = '$name' "
+            db.execSQL(updateQuery)
+            db.close()
+            Toast.makeText(context, "Puntaje guardado exitosamente!", Toast.LENGTH_LONG).show()
+        } catch(ex: IOException) {
+            Toast.makeText(context, "Ocurrió un error al guardar el puntaje", Toast.LENGTH_SHORT).show()
+        }
     }
 
     @SuppressLint("Range")
@@ -173,10 +165,25 @@ class UserCRUD() {
         val db = admin.writableDatabase
         val query = "select score from Users where name = ?"
         val cursor = db.rawQuery(query, arrayOf(name))
-        var score = cursor.getString(cursor.getColumnIndex("score")).toInt()
+        var score = ""
+
+        try{
+            try {
+                if(cursor != null && cursor.moveToFirst()) {
+                    score = cursor.getString(cursor.getColumnIndex("score"))
+                }
+            } catch(ex: IOException){
+
+            } finally {
+                cursor?.close()
+            }
+
+        } catch(ex: IOException){
+
+        }
+
         cursor.close()
         db.close()
-        return score
+        return score.toInt()
     }
-
 }

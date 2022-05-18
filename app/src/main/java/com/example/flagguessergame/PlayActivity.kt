@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import com.squareup.picasso.Picasso
+import java.io.IOException
 
 class PlayActivity : AppCompatActivity() {
 
@@ -24,57 +26,77 @@ class PlayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
 
-        //sacar de aca luego, y tomarlo como el finally despues de intentar acertar, al margen del resultado
-        val botonDeBanderas = findViewById<Button>(R.id.nextbtn)
-        botonDeBanderas.setOnClickListener{
-        prepareNewRound()
-        }
+        //Inicializo variables.
         initVars()
         initPlayerVars()
+
+        //Cargo una nueva bandera al entrar en el activityPlay.
+        prepareNewRound()
+
+    //findViewById<Button>(R.id.nextbtn).setOnClickListener{
+        //}
     }
 
     fun redirectToMain(view: View) {
-        //agregar salvar antes
+        //guardo el puntaje antes y luego lo reseteo
+        this.saveScore(view)
+        this.score = 0
+
+        //paso los datos al intent para que los reciba el mainActivity
         var intentMain: Intent = Intent(this, MainActivity::class.java)
+        intentMain.putExtra("username", this.currentPlayer)
+        intentMain.putExtra("score", 0)
+        intentMain.putExtra("isLogged", true.toString())
+
+        //agregar pasar los datos del usuario
         startActivity(intentMain)
     }
 
     private fun initVars() {
+        //Lleno la lista de banderas
         fillList()
+
+        //Preparo una nueva ronda de juego
         prepareNewRound()
     }
 
     private fun initPlayerVars() {
-        //this.currentPlayer = findViewById<>()
+        //Tomo y setteo los valores del jugador.
         this.score =  intent.getIntExtra("score", 0)
         this.currentPlayer = intent.getStringExtra("username").toString()
         findViewById<TextView>(R.id.playertxt).text = currentPlayer
     }
 
     private fun prepareNewRound() {
+        //Vacío la ultima lista de banderas
         emptyLastOptionsUsed()
-        //evito que vuelva a salir una bandera correcta como opcion correcta nuevamente
+
+        //Evito que vuelva a salir una bandera correcta como opcion correcta nuevamente
         do{
             getRandomFlag()
             flagSelected = flagSelected.replace("%20", " ")
         } while(this.guessedFlags.contains(this.flagSelected))
 
+        //Selecciono las 3 opciones incorrectas.
         selectWrongOptions(flagSelected)
+
+        //Lleno los botones con las opciones (3 erróneas, 1 correcta)
         fillButtons()
     }
 
-    fun emptyLastOptionsUsed() {
+    private fun emptyLastOptionsUsed() {
         if(this.countryOptions.isNotEmpty()) {
             this.countryOptions.removeAll(this.countryOptions)
         }
     }
 
+    //Obtengo una bandera al azar de mi lista y uso esa para consultar a la api por la imagen.
     fun getRandomFlag() {
         flagSelected = countriesList.random().replace(" ", "%20")
-        var img = findViewById<ImageView>(R.id.image_view)
+        val img = findViewById<ImageView>(R.id.image_view)
         var url = "https://countryflagsapi.com/png/$flagSelected"
-        //prueba, borrar luego:
-        //findViewById<EditText>(R.id.idref).setText(flagSelected)
+
+        //La cargo y muestro con Picasso.
         Picasso.with(this).load(url).into(img)
     }
 
@@ -109,12 +131,14 @@ class PlayActivity : AppCompatActivity() {
         findViewById<Button>(R.id.b4).text = clearText(countryOptions[3])
     }
 
+    //Método para limpar el nombre recibido.
     private fun clearText(textToClear: String): String {
         return textToClear.replace("%20", " ")
     }
 
+    //Método para chequear si la respuesta es correcta o no.
     fun checkAnswer(view: View) {
-        var selectedOption: Button = view as Button
+        val selectedOption: Button = view as Button
         flagSelected = flagSelected.replace("%20", " ")
 
         if( (selectedOption.getText().equals(this.flagSelected)) ) {
@@ -124,10 +148,9 @@ class PlayActivity : AppCompatActivity() {
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
         }
         else {
-            Toast.makeText(this, "Wrong! The answer was $flagSelected", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Wrong! The answer was $flagSelected", Toast.LENGTH_SHORT).show()
         }
 
-        //Reparto de nuevo
         prepareNewRound()
     }
 
@@ -136,7 +159,14 @@ class PlayActivity : AppCompatActivity() {
         this.guessedFlags.add(guessedFlag)
     }
 
+    //Guardo el puntaje actual.
     fun saveScore(view: View) {
-        userMgmt.updateScore(PlayActivity(), this.currentPlayer, this.score)
+        try{
+            userMgmt.updateScore(this, this.currentPlayer, this.score)
+            this.score = 0
+        } catch (ex: IOException) {
+            Toast.makeText(this, "Ocurrió un error al intentar guardar los datos", Toast.LENGTH_SHORT)
+        }
+
     }
 }

@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
     var isLogged: String = "false"
     var currentUser: String = ""
     var score: Int = 0
-    var doorIcon: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +25,13 @@ class MainActivity : AppCompatActivity() {
         currentUser= intent.getStringExtra("username").toString()
         score = intent.getIntExtra("score", 0)
 
+
         checkIfLogged()
+
+        //var helper: SQLiteHelper = SQLiteHelper(applicationContext, "GameDB", null, 1)
+
+        //helper.onCreate(helper.readableDatabase)
+
     }
 
     var buttonPlayActivated: Boolean = false
