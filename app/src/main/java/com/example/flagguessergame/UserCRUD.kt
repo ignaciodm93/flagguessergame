@@ -99,24 +99,10 @@ class UserCRUD() {
 
     @SuppressLint("Range")
     fun getTopTenCursor(context: Context, db: SQLiteDatabase): Cursor {
-        //val admin = SQLiteHelper(context,"GameDB", null, 1)
-        //val db = admin.writableDatabase
+
         val query = "SELECT * FROM Users ORDER BY score DESC LIMIT 10"
         val cursor = db.rawQuery(query, null)
-        /*val usersFound = mutableListOf<User>()
 
-        var list = mutableListOf<String>()
-
-        if  (cursor.moveToFirst()) {
-            do {
-                val name = cursor.getString(cursor.getColumnIndex("name"))
-                val score = cursor.getString(cursor.getColumnIndex("score")).toInt()
-                var newUser: User = User(name, score)
-                usersFound.add(newUser);
-                list.add(name)
-            }while (cursor.moveToNext());
-        }*/
-        //db.close()
         return cursor
     }
 
