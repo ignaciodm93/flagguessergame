@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></ImageView>
 
-    <Button
+    <!--<Button
         android:id="@+id/nextbtn"
         android:layout_width="105dp"
         android:layout_height="44dp"
@@ -32,38 +32,40 @@
         app:layout_constraintEnd_toStartOf="@+id/savebtn"
         app:layout_constraintStart_toEndOf="@+id/mainbtn"
         android:backgroundTint="#FFDC4D00"
-        tools:ignore="OnClick" />
+        tools:ignore="OnClick" />-->
 
     <Button
         android:id="@+id/savebtn"
-        android:layout_width="105dp"
+        android:layout_width="140dp"
         android:layout_height="44dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="96dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="13dp"
         android:backgroundTint="#FFDC4D00"
+        android:onClick="saveScore"
         android:text="Save"
         app:layout_constraintBottom_toTopOf="@+id/image_view"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/nextbtn"
+        app:layout_constraintStart_toEndOf="@+id/mainbtn"
         app:layout_constraintTop_toTopOf="parent"
-        android:onClick="saveScore"
         tools:ignore="OnClick" />
 
     <Button
         android:id="@+id/mainbtn"
-        android:layout_width="105dp"
+        android:layout_width="140dp"
         android:layout_height="44dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="13dp"
-        android:text="Main"
-        app:layout_constraintBottom_toTopOf="@+id/image_view"
-        app:layout_constraintEnd_toStartOf="@+id/nextbtn"
-        app:layout_constraintStart_toStartOf="parent"
         android:backgroundTint="#FFDC4D00"
         android:onClick="redirectToMain"
+
+        android:text="Main"
+        app:layout_constraintBottom_toTopOf="@+id/image_view"
+        app:layout_constraintEnd_toStartOf="@+id/savebtn"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="OnClick" />
 
     <Button
@@ -171,7 +173,7 @@
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/nextbtn"
+
         app:layout_constraintEnd_toStartOf="@+id/score"
         app:layout_constraintStart_toEndOf="@+id/playertxt"
         app:layout_constraintTop_toTopOf="parent"
@@ -185,7 +187,7 @@
         android:layout_marginTop="37dp"
         android:layout_marginBottom="23dp"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/nextbtn"
+
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
@@ -202,5 +204,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/presence_online"
         tools:ignore="MissingConstraints" />
-
+    <!--app:layout_constraintBottom_toTopOf="@+id/nextbtn"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/nextbtn"-->
+    <!--app:layout_constraintEnd_toStartOf="@+id/nextbtn"-->
+    <!--app:layout_constraintStart_toEndOf="@+id/nextbtn"-->
 </androidx.constraintlayout.widget.ConstraintLayout>

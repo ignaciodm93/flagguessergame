@@ -1,5 +1,6 @@
 package com.example.flagguessergame
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -83,14 +84,14 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "No existe un artículo con dicha descripción", Toast.LENGTH_SHORT).show()
         bd.close()*/
 
-        var bestPlayers: List<UserCRUD.User> = userMgmt.getTopTen(this)
+        //val bestPlayers: List<UserCRUD.User> = userMgmt.getTopTen(this)
 
         //agregarlo dentro de un if validANDO la cantidad luego
 
-        var counter: Int = 1
+        /*val counter: Int = 1
         bestPlayers.forEach {
             user -> this.buildRankingRegistry(user, counter)
-        }
+        }*/
 
     }
 
@@ -98,6 +99,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("CutPasteId")
     fun eraseDatabase() {
         val name = findViewById<EditText>(R.id.logname).text.toString()
         val pass = findViewById<EditText>(R.id.logpass).text.toString()
