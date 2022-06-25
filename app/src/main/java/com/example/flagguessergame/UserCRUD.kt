@@ -10,8 +10,7 @@ import java.io.IOException
 
 class UserCRUD() {
 
-    class User(name: String, score: Int)
-
+    //Chequeo si el usuario existe, consultando por el nombre de usuario ingresado
     fun exists(context: Context, nameToCheck: String): Boolean {
         val admin = SQLiteHelper(context, "GameDB", null, 1)
         val bd = admin.writableDatabase
@@ -21,56 +20,7 @@ class UserCRUD() {
         return amount > 0
     }
 
-    //Chequea si un usuario con los datos ingresados ya está registrado.
-    fun exists1(context: Context, nameToCheck: String): Boolean {
-        val admin = SQLiteHelper(context, "users", null, 1)
-        val db = admin.writableDatabase
-        //val query = "select * from Users where name = ?"
-        val query = "SELECT * FROM Users WHERE name = ?"
-        val cursor:Cursor = db.rawQuery(query, arrayOf(nameToCheck))
-
-        val result = cursor.count > 0
-        if( cursor.count > 0) {
-            print("hay reg")
-        }
-
-        return false
-    }
-    /*
-     val admin = SQLiteHelper(this, "Users", null, 1)
-     val bd = admin.writableDatabase
-     var filas = bd.rawQuery("select name, score from Users", null)
-     if (!filas.equals(null)) {
-         var r = filas.moveToNext()
-         Toast.makeText(this, "Hay 1 registro en la tabla al menos", Toast.LENGTH_LONG).show()
-     } else
-         Toast.makeText(this, "No existe un artículo con dicha descripción", Toast.LENGTH_SHORT).show()
-     bd.close()
-*/
-//no funciona
-    @SuppressLint("Range")
-    fun selectAllRegisters(context: Context): List<User> {
-        val admin = SQLiteHelper(context,"GameDB", null, 1)
-        val db = admin.writableDatabase
-        val query = "SELECT * FROM Users"
-        val cursor = db.rawQuery(query, null)
-        val usersFound = mutableListOf<User>()
-
-        var list = mutableListOf<String>()
-
-        if  (cursor.moveToFirst()) {
-            do {
-                val name = cursor.getString(cursor.getColumnIndex("name"))
-                val score = cursor.getString(cursor.getColumnIndex("score")).toInt()
-                var newUser: User = User(name, score)
-                usersFound.add(newUser);
-                list.add(name)
-            }while (cursor.moveToNext());
-        }
-        db.close()
-        return usersFound
-    }
-
+    //Evaluo si la contraseña coincide para el usuario ingresado
     fun userMatchesPass(context: Context, nameToCheck: String, passToCheck: String): Boolean {
         val admin = SQLiteHelper(context, "GameDB", null, 1)
         val db = admin.writableDatabase
@@ -82,6 +32,7 @@ class UserCRUD() {
         return result
     }
 
+    //Registro un nuevo usuario en la bd
     fun registerNewUser(context: Context, nameToSave: String, passToSave: String) {
         try {
             val admin = SQLiteHelper(context,"GameDB", null, 1)
@@ -97,12 +48,11 @@ class UserCRUD() {
         }
     }
 
+    //Obtengo los 10 puntajes mas altos para llenar la activity de Ranking
     @SuppressLint("Range")
     fun getTopTenCursor(context: Context, db: SQLiteDatabase): Cursor {
-
         val query = "SELECT * FROM Users ORDER BY score DESC LIMIT 10"
         val cursor = db.rawQuery(query, null)
-
         return cursor
     }
 
@@ -129,6 +79,7 @@ class UserCRUD() {
         db.close()
     }
 
+    //Actualizo o guardo el puntaje de un jugador, tomando el puntaje previo si ya habia jugado anteriormente
     fun updateScore(context: Context, name: String, newScore: Int) {
         try{
             val admin = SQLiteHelper(context,"GameDB", null, 1)
@@ -145,6 +96,7 @@ class UserCRUD() {
         }
     }
 
+    //Consulto y obtengo el puntaje de un jugador especifico
     @SuppressLint("Range")
     private fun getCurrentPlayersScore(context: Context, name: String): Int {
         val admin = SQLiteHelper(context, "GameDB", null, 1)
@@ -153,20 +105,15 @@ class UserCRUD() {
         val cursor = db.rawQuery(query, arrayOf(name))
         var score = ""
 
-        try{
             try {
                 if(cursor != null && cursor.moveToFirst()) {
                     score = cursor.getString(cursor.getColumnIndex("score"))
                 }
             } catch(ex: IOException){
-
+                Toast.makeText(context, "Ocurrió un error al intentar obtener el puntaje", Toast.LENGTH_SHORT).show()
             } finally {
                 cursor?.close()
             }
-
-        } catch(ex: IOException){
-
-        }
 
         cursor.close()
         db.close()

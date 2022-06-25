@@ -71,7 +71,7 @@
         android:paddingStart="10dp"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:text="Insert username and password to login, if you already have an account. If not, your username will be used and registered as a new one. If the username is taken, please try another one."
+        android:text="@string/registryInfo"
         android:textAlignment="viewStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

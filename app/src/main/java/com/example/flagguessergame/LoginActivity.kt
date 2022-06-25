@@ -19,91 +19,20 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-        //insertTestUser()
-        //getRanking()
-
     }
 
+    //Metodo para volver al main
     fun goToMainActivity(view: View) {
         var intentMain: Intent = Intent(this, MainActivity::class.java)
-        /*intentMain.putExtra("isLogged","true")
-        intentMain.putExtra("username","Nakio")
-        startActivity(intentMain)*/
         finish()
     }
 
-    fun insertNewUser() {
-        val admin = SQLiteHelper(this,"GameDB", null, 1)
-        val bd = admin.writableDatabase
-        val newUser = ContentValues()
-        newUser.put("name", "")
-        newUser.put("password", "")
-        newUser.put("score", 0) //cambiar por el valor tomado de la pantalla
-        bd.insert("Users", null, newUser)
-        bd.close()
-    }
-
-    /*fun insertTestUser() {
-        val admin = SQLiteHelper(this,"GameDB", null, 1)
-        val bd = admin.writableDatabase
-        val newUser = ContentValues()
-        newUser.put("name", "Ditto")
-        newUser.put("password", "ditto123")
-        newUser.put("score", 100) //cambiar por el valor tomado de la pantalla
-        try{
-            bd.insert("Users", null, newUser)
-        } catch(ex: Exception) {
-            print(ex.message)
-        }
-
-        bd.close()
-    }*/
-
-    fun getRanking() {
-        /*val query: String = "SELECT name, score FROM Users";
-
-        //https://developer.android.com/training/data-storage/sqlite#kotlin
-
-
-        val admin = SQLiteHelper(this, "Users", null, 1)
-        val bd = admin.writableDatabase
-
-        //var q: String = "SELECT name FROM sqlite_master WHERE type='table' AND name='Users'"
-        //var checktable = bd.rawQuery(q, null)
-
-        //if(checktable == null) {
-        //    print("no existe")
-        //}
-
-        var filas = bd.rawQuery("select name, score from Users", null)
-        if (!filas.equals(null)) {
-            var r = filas.moveToNext()
-            Toast.makeText(this, "Hay 1 registro en la tabla al menos", Toast.LENGTH_LONG).show()
-        } else
-            Toast.makeText(this, "No existe un artículo con dicha descripción", Toast.LENGTH_SHORT).show()
-        bd.close()*/
-
-        //val bestPlayers: List<UserCRUD.User> = userMgmt.getTopTen(this)
-
-        //agregarlo dentro de un if validANDO la cantidad luego
-
-        /*val counter: Int = 1
-        bestPlayers.forEach {
-            user -> this.buildRankingRegistry(user, counter)
-        }*/
-
-    }
-
-    private fun buildRankingRegistry(user: UserCRUD.User, counter: Int) {
-
-    }
-
+    //Metodo para borrar la base de datos ingresando como 'adm' y contraseña 'erase'
     @SuppressLint("CutPasteId")
     fun eraseDatabase() {
         val name = findViewById<EditText>(R.id.logname).text.toString()
         val pass = findViewById<EditText>(R.id.logpass).text.toString()
-        //excluir este nombrede usuario de los posibles, agregar validación en donde corresponda
+
         if (name == "adm") {
             if(pass == "erase") {
                 userMgmt.eraseAll(this)
@@ -119,20 +48,24 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    //Metodo no usado para borrar un usuario
     fun eraseUser() {
         if(!checkRequireds()) {
             userMgmt.eraseByName(this, findViewById<EditText>(R.id.logname).text.toString(), findViewById<EditText>(R.id.logpass).text.toString())
         }
     }
 
+    //Llama al servicio para ver si el usuario existe
     fun checkIfUserExists(): Boolean {
         return userMgmt.exists(this, findViewById<EditText>(R.id.logname).text.toString())
     }
 
+    //Llama al service para valudar si la contraseña ingresada coincide con la que deberia del usuario ingresado
     fun checkIfPasswordMatches(): Boolean {
         return userMgmt.userMatchesPass(this, findViewById<EditText>(R.id.logname).text.toString(), findViewById<EditText>(R.id.logpass).text.toString())
     }
 
+    //Metodo para loggearse (si ya existe) o registrarse (si no existe)
     fun loginOrRegister(view: View){
         //Chequea si el nombre existe:
         if(findViewById<EditText>(R.id.logname).text.toString() == "adm") {
@@ -173,10 +106,12 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    //Llamo al servicio de registro, pasandole el nombre y la contraseña ingresados
     fun registerNewUser() {
         this.userMgmt.registerNewUser(this, findViewById<EditText>(R.id.logname).text.toString(), findViewById<EditText>(R.id.logpass).text.toString())
     }
 
+    //Vuelvo al main pasandole datos del usuario loggeado y el booleando para las animaciones
     private fun redirectToMainLogged(nameToDisplay: String) {
         var intentMain: Intent = Intent(this, MainActivity::class.java)
         intentMain.putExtra("isLogged", true.toString())
@@ -185,6 +120,7 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
+    //Valido lo que se ingresa a ver si le falta algun dato
     private fun checkRequireds(): Boolean {
         var missingOne: Boolean = false
         if(findViewById<EditText>(R.id.logname).text.isEmpty()) {

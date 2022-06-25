@@ -17,8 +17,7 @@ class PlayActivity : AppCompatActivity() {
     var countryOptions: MutableList<String> = mutableListOf()   //incluyendo la verdadera
     var countriesList: Array<String> = arrayOf()
     var flagSelected: String = ""
-    var guessedFlags: MutableList<String> = mutableListOf() //lista de paises respondidos correctamente
-
+    var guessedFlags: MutableList<String> = mutableListOf() //Lista de paises respondidos correctamente
     var currentPlayer: String = ""
     var score: Int = 0
 
@@ -32,11 +31,9 @@ class PlayActivity : AppCompatActivity() {
 
         //Cargo una nueva bandera al entrar en el activityPlay.
         prepareNewRound()
-
-    //findViewById<Button>(R.id.nextbtn).setOnClickListener{
-        //}
     }
 
+    //Vuelvo al Main Activity pasandole los datos
     fun redirectToMain(view: View) {
         //guardo el puntaje antes y luego lo reseteo
         this.saveScore(view)
@@ -100,6 +97,7 @@ class PlayActivity : AppCompatActivity() {
         Picasso.with(this).load(url).into(img)
     }
 
+    //Lleno la lista
     private fun fillList() {
         //Lleno la lista de banderas.
         countriesList = arrayOf(
@@ -107,6 +105,7 @@ class PlayActivity : AppCompatActivity() {
         )
     }
 
+    //Sumo tres banderas mas, que sean incorrectas
     fun selectWrongOptions(correct: String) {
         //Agarro 3 opciones de la lista excluyendo la correcta
         var count = 0;
@@ -120,6 +119,7 @@ class PlayActivity : AppCompatActivity() {
         countryOptions.add(correct)
     }
 
+    //Lleno los botones con las opciones
     private fun fillButtons() {
         //Randomizo el orden y setteo las opciones en los botones
         countryOptions.shuffle()

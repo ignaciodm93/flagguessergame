@@ -27,6 +27,7 @@ class RankingActivity: AppCompatActivity() {
         admin.close()
     }
 
+    //Lleno la tabla (ranking_list) con valores obtenidos por el parámetro 'cursor', que obtengo previamente del servicio de ususarios
     inner class CursorAdapterListView(context: Context, cursor: Cursor) :
         CursorAdapter(context, cursor, FLAG_REGISTER_CONTENT_OBSERVER) {
 

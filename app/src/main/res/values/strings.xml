@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">FlagGuesserGame</string>
-    <string name="detailed_info_activity">FlagGuesser is made by Ignacio Della Morte, an argentinian developer born 22/02/1993 in Buenos Aires. \n\n ISTEA student. \n\n Current code is in my github: https://github.com/ignaciodm93/flagguessergame/tree/master \n\n LinkedIn: https://www.linkedin.com/in/ignacio-della-morte-8a8061177/ \n\n</string>
+    <string name="detailed_info_activity">FlagGuesser is made by Ignacio Della Morte, an argentinian developer born 22/02/1993 in Buenos Aires.</string>
+    <string name="detailed_info_activity_istea">ISTEA student.</string>
+    <string name="detailed_info_activity_git">Current code is in my github: \n https://github.com/ignaciodm93/flagguessergame/tree/master</string>
+    <string name="detailed_info_activity_linked">LinkedIn: \n https://www.linkedin.com/in/ignacio-della-morte-8a8061177</string>
+    <string name="isLogged">Loggeado</string>
+    <string name="notLogged">No loggeado</string>
+    <string name="registryInfo">Inserte un nombre de usuario, si el mismo ya existe se validará su constraseña. Si no existe se registrará como uno nuevo. </string>
 </resources>

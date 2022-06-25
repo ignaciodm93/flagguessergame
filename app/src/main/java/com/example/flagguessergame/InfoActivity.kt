@@ -12,6 +12,7 @@ class InfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_info)
     }
 
+    //Vuelvo al main
     fun goToMainActivity(view: View) {
         var intentMain: Intent = Intent(this, MainActivity::class.java)
         startActivity(intentMain)
